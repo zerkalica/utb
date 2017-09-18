@@ -1,0 +1,71 @@
+{
+  "inferno_utb": {
+    "name": "inferno 3.9.0",
+    "description": "An extremely fast, React-like JavaScript library for building modern user interfaces",
+    "homepage": "https://github.com/infernojs/inferno#readme",
+    "examples": [
+      {
+        "name": "lom_atom 1.1.2",
+        "url": "examples/inferno-lom_atom"
+      },
+      {
+        "name": "mobx 3.2.2",
+        "url": "examples/inferno-mobx"
+      },
+      {
+        "name": "raw",
+        "url": "examples/inferno-raw"
+      },
+      {
+        "name": "reactive-di 4.0.14",
+        "url": "examples/inferno-reactive-di"
+      }
+    ]
+  },
+  "preact_utb": {
+    "name": "preact 8.2.5",
+    "description": "Fast 3kb React alternative with the same ES6 API. Components & Virtual DOM.",
+    "homepage": "https://github.com/developit/preact",
+    "examples": [
+      {
+        "name": "lom_atom 1.1.2",
+        "url": "examples/preact-lom_atom"
+      },
+      {
+        "name": "mobx 3.2.2",
+        "url": "examples/preact-mobx"
+      },
+      {
+        "name": "raw",
+        "url": "examples/preact-raw"
+      },
+      {
+        "name": "reactive-di 4.0.14",
+        "url": "examples/preact-reactive-di"
+      }
+    ]
+  },
+  "react_utb": {
+    "name": "react 15.6.1",
+    "description": "React is a JavaScript library for building user interfaces.",
+    "homepage": "https://facebook.github.io/react/",
+    "examples": [
+      {
+        "name": "lom_atom 1.1.2",
+        "url": "examples/react-lom_atom"
+      },
+      {
+        "name": "mobx 3.2.2",
+        "url": "examples/react-mobx"
+      },
+      {
+        "name": "raw",
+        "url": "examples/react-raw"
+      },
+      {
+        "name": "reactive-di 4.0.14",
+        "url": "examples/react-reactive-di"
+      }
+    ]
+  }
+}

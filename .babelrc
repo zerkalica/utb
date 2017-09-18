@@ -1,0 +1,14 @@
+{
+  "presets": [
+    "flow",
+    "react",
+    "stage-0",
+    ["es2015", {"loose": true}]
+  ],
+  "plugins": [
+    "transform-decorators",
+    "transform-metadata",
+    ["transform-class-properties", {"loose": true}],
+    ["transform-react-jsx", {"pragma": "lom_h"}]
+  ]
+}

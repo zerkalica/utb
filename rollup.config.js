@@ -45,8 +45,8 @@ const baseConfig = {
                 'mobx-react': ['observer'],
                 'inferno-mobx': ['observer'],
                 'inferno-compat': ['render', 'createElement', 'Component'],
-                'react-dom': ['render'],
-                'react': ['createElement', 'Component']
+                'react-dom': ['render', 'findDOMNode', 'unstable_batchedUpdates'],
+                'react': ['createElement', 'Component', 'Children']
             },
             include: [
                 'node_modules/create-react-class/**',

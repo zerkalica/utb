@@ -5,11 +5,11 @@
     "homepage": "https://github.com/infernojs/inferno#readme",
     "examples": [
       {
-        "name": "lom_atom 1.1.2",
+        "name": "lom_atom 1.1.4",
         "url": "examples/inferno-lom_atom"
       },
       {
-        "name": "mobx 3.2.2",
+        "name": "mobx 3.3.0",
         "url": "examples/inferno-mobx"
       },
       {
@@ -17,7 +17,7 @@
         "url": "examples/inferno-raw"
       },
       {
-        "name": "reactive-di 4.0.14",
+        "name": "reactive-di 4.0.16",
         "url": "examples/inferno-reactive-di"
       }
     ]
@@ -28,11 +28,11 @@
     "homepage": "https://github.com/developit/preact",
     "examples": [
       {
-        "name": "lom_atom 1.1.2",
+        "name": "lom_atom 1.1.4",
         "url": "examples/preact-lom_atom"
       },
       {
-        "name": "mobx 3.2.2",
+        "name": "mobx 3.3.0",
         "url": "examples/preact-mobx"
       },
       {
@@ -40,22 +40,22 @@
         "url": "examples/preact-raw"
       },
       {
-        "name": "reactive-di 4.0.14",
+        "name": "reactive-di 4.0.16",
         "url": "examples/preact-reactive-di"
       }
     ]
   },
   "react_utb": {
-    "name": "react 15.6.1",
+    "name": "react 15.6.2",
     "description": "React is a JavaScript library for building user interfaces.",
     "homepage": "https://facebook.github.io/react/",
     "examples": [
       {
-        "name": "lom_atom 1.1.2",
+        "name": "lom_atom 1.1.4",
         "url": "examples/react-lom_atom"
       },
       {
-        "name": "mobx 3.2.2",
+        "name": "mobx 3.3.0",
         "url": "examples/react-mobx"
       },
       {
@@ -63,7 +63,7 @@
         "url": "examples/react-raw"
       },
       {
-        "name": "reactive-di 4.0.14",
+        "name": "reactive-di 4.0.16",
         "url": "examples/react-reactive-di"
       }
     ]

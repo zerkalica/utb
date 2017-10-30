@@ -1,6 +1,6 @@
 // @flow
 
-import {observer} from 'react-stubs'
+import {observer} from 'mobx-stubs'
 
 import TodoService from './TodoService'
 import type {ITodo} from './TodoService'

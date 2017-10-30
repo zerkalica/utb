@@ -94,7 +94,8 @@ function toConfig({frm, stateFrm}) {
         ],
         plugins: baseConfig.plugins.concat([
             alias({
-                'react-stubs': `src/stubs/${frm.name}.js`
+                'react-stubs': `src/stubs/${frm.name}.js`,
+                'mobx-stubs': `src/stubs-mobx/${frm.name}.js`
             })
         ])
     })

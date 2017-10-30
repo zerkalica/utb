@@ -12,4 +12,5 @@ esproposal.decorators=ignore
 esproposal.class_static_fields=enable
 esproposal.class_instance_fields=enable
 module.name_mapper='^react-stubs' -> '<PROJECT_ROOT>/src/stubs/preact.js'
+module.name_mapper='^mobx-stubs' -> '<PROJECT_ROOT>/src/stubs-mobx/preact.js'
 unsafe.enable_getters_and_setters=true

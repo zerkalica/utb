@@ -1,7 +1,7 @@
 // @flow
 
 import {action, observable} from 'mobx'
-import {observer} from 'react-stubs'
+import {observer} from 'mobx-stubs'
 import type {ITodo} from './TodoService'
 
 const ESCAPE_KEY = 27

@@ -1,7 +1,7 @@
 // @flow
 
 import {observable} from 'mobx'
-import {observer} from 'react-stubs'
+import {observer} from 'mobx-stubs'
 
 import TodoService from './TodoService'
 

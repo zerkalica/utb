@@ -1,6 +1,7 @@
 // @flow
 import atomize from '../atomize'
-import {action, mem, props} from 'lom_atom'
+import {action, mem} from 'lom_atom'
+import {props} from 'reactive-di'
 
 interface ITodoHeaderProps {
     addTodo(title: string): void;

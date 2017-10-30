@@ -1,6 +1,7 @@
 // @flow
 
-import {mem, action, props} from 'lom_atom'
+import {mem, action} from 'lom_atom'
+import {props} from 'reactive-di'
 import type {ITodo} from './TodoService'
 
 import atomize from '../atomize'

@@ -31,13 +31,17 @@ function fixbabelrc(rc) {
 
 const rc = fixbabelrc(babelrc())
 
-const baseConfig = {
-    sourcemap: process.env.UGLIFY !== '1',
-    plugins: [
+const isUglify = process.env.UGIFY === 1 || process.env.NODE_ENV === 'production'
 
+const baseConfig = {
+    sourcemap: isUglify,
+    plugins: [
         resolve({
             browser: true,
             module: true
+        }),
+        replace({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
         }),
         commonjs({
             namedExports: {
@@ -77,10 +81,7 @@ const baseConfig = {
         sourcemaps(),
         babel(rc),
         globals(),
-        replace({
-            'process.env.NODE_ENV': JSON.stringify('production')
-        })
-    ].concat(process.env.UGLIFY === '1' ? [uglify({}, minify)] : [])
+    ].concat(isUglify ? [uglify({}, minify)] : [])
 }
 
 function toConfig({frm, stateFrm}) {

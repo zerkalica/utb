@@ -9,10 +9,10 @@
     "dest": "."
   },
   "scripts": {
-    "release": "NODE_ENV=production UGLIFY=1 npm run build && standard-version -a && npm run postversion",
+    "release": "standard-version -a && npm run postversion",
     "postversion": "git push --follow-tags origin master && npm publish",
     "test": "exit 0",
-    "build": "rollup -c",
+    "build": "NODE_ENV=production rollup -c",
     "start": "static docs"
   },
   "author": "Stefan Zerkalica <zerkalica@gmail.com>",

@@ -13,6 +13,7 @@
     "postversion": "git push --follow-tags origin master && npm publish",
     "test": "exit 0",
     "build": "NODE_ENV=production rollup -c",
+    "dev": "NODE_ENV=development rollup -c",
     "start": "static docs"
   },
   "author": "Stefan Zerkalica <zerkalica@gmail.com>",
@@ -85,7 +86,7 @@
     "preact": "^8.2.6",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "reactive-di": "^5.0.1",
+    "reactive-di": "^5.0.2",
     "todomvc-common": "^1.0.4"
   }
 }

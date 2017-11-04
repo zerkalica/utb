@@ -85,10 +85,11 @@ const baseConfig = {
 }
 
 function toConfig({frm, stateFrm}) {
-    const name = `${frm.name}-${stateFrm.name}`
+    const stName = formatName(stateFrm)
+    const name = `${frm.name}-${stName}`
 
     return Object.assign({}, baseConfig, {
-        input: `src/perf/${stateFrm.name}/index.js`,
+        input: `src/perf/${stName}/index.js`,
         output: [
             {file: `docs/examples/${name}/bundle.js`, format: 'iife', name: name.replace(/\-/g, '_')}
         ],
@@ -101,13 +102,18 @@ function toConfig({frm, stateFrm}) {
     })
 }
 
+function getInfoPart(rawName) {
+    const name = path.basename(rawName, '.js')
+    const pkgStr = name === 'raw' ? null : ('' + fs.readFileSync(path.join(fr(require.resolve(name)), 'package.json')))
+    return {
+        name,
+        pkg: pkgStr ? JSON.parse(pkgStr) : null
+    }
+}
+
 function getInfo(rawName) {
-  const name = path.basename(rawName, '.js')
-  const pkgStr = name === 'raw' ? null : ('' + fs.readFileSync(path.join(fr(require.resolve(name)), 'package.json')))
-  return {
-    name,
-    pkg: pkgStr ? JSON.parse(pkgStr) : null
-  }
+    const parts = rawName.split('--')
+    return parts.length > 1 ? parts.map(getInfoPart) : getInfoPart(rawName)
 }
 
 function intersect(a1, a2) {
@@ -120,9 +126,21 @@ function intersect(a1, a2) {
 }
 
 
-function formatVersion({name, pkg}) {
-  return `${name}${pkg ? ` ${pkg.version}` : ''}`
+function formatSingleVersion({name, pkg}) {
+    return `${name}${pkg ? ` ${pkg.version}` : ''}`
 }
+
+function formatVersion(items) {
+    return Array.isArray(items) ? items.map(formatSingleVersion).join(' + ') : formatSingleVersion(items)
+}
+
+function formatSingleName({name}) {
+    return name
+}
+function formatName(items) {
+    return Array.isArray(items) ? items.map(formatSingleName).join('--') : formatSingleName(items)
+}
+
 function genIndex(items) {
     return `<!DOCTYPE html>
 <html>
@@ -136,7 +154,7 @@ function genIndex(items) {
       <ul>
         ${items.map(({frm, stateFrm}) => `
             <li>
-              <a href="./examples/${frm.name}-${stateFrm.name}/index.html">
+              <a href="./examples/${frm.name}-${formatName(stateFrm)}/index.html">
                 ${formatVersion(frm)} + ${formatVersion(stateFrm)}
               </a>
             </li>
@@ -148,27 +166,27 @@ function genIndex(items) {
 }
 
 function genLearn(frms, stateFrms) {
-  const obj = {}
+    const obj = {}
 
-  frms.forEach((frm) => {
-    const key = `${frm.name}_utb`
-    const pkg = frm.pkg || {}
-    obj[key] = {
-      name: formatVersion(frm),
-      description: pkg.description || frm.name,
-      homepage: pkg.homepage || null,
-      examples: stateFrms.map((stateFrm) => ({
-        name: formatVersion(stateFrm),
-        url: `examples/${frm.name}-${stateFrm.name}`
-      }))
-    }
-  })
+    frms.forEach((frm) => {
+        const key = `${frm.name}_utb`
+        const pkg = frm.pkg || {}
+        obj[key] = {
+            name: formatVersion(frm),
+            description: pkg.description || frm.name,
+            homepage: pkg.homepage || null,
+            examples: stateFrms.map((stateFrm) => ({
+                name: formatVersion(stateFrm),
+                url: `examples/${frm.name}-${formatName(stateFrm)}`
+            }))
+        }
+    })
 
-  return JSON.stringify(obj, null, '  ')
+    return JSON.stringify(obj, null, '  ')
 }
 
 function genFrmIndex(frm) {
-    return `<!doctype html>
+  return `<!doctype html>
 <html lang="en" data-framework="${frm.name}">
   <head><meta charset="utf-8">
     <title>${frm.name}, ${frm.pkg ? frm.pkg.version : ''} • TodoMVC</title>
@@ -185,11 +203,24 @@ function genFrmIndex(frm) {
 }
 
 // main
-const COMPONENT_FRAMEWORKS = fs.readdirSync(path.join(__dirname, 'src', 'stubs')).map(getInfo)
-const STATE_FRAMEWORKS = fs.readdirSync(path.join(__dirname, 'src', 'perf')).map(getInfo)
+const stubsDir = path.join(__dirname, 'src', 'stubs')
+const perfDir = path.join(__dirname, 'src', 'perf')
 
-const items = intersect(COMPONENT_FRAMEWORKS, STATE_FRAMEWORKS)
-const learnItems = genLearn(COMPONENT_FRAMEWORKS, STATE_FRAMEWORKS)
+const defaultComponentLib = process.env.COMPONENT_LIB
+const defaultStateLib = process.env.STATE_LIB
+
+const componentDirs = defaultComponentLib
+    ? [path.join(stubsDir, defaultComponentLib)]
+    : fs.readdirSync(stubsDir)
+
+const stateLibDirs = defaultStateLib
+    ? [path.join(perfDir, defaultStateLib)]
+    : fs.readdirSync(perfDir)
+
+const componentFrameworks = componentDirs.map(getInfo)
+const stateFrameworks = stateLibDirs.map(getInfo)
+const items = intersect(componentFrameworks, stateFrameworks)
+const learnItems = genLearn(componentFrameworks, stateFrameworks)
 
 const exampleDir = path.join(__dirname, 'docs', 'examples')
 rimraf.sync(exampleDir)
@@ -199,7 +230,7 @@ fs.writeFileSync(path.join(__dirname, 'docs', 'index.html'), genIndex(items))
 fs.writeFileSync(path.join(__dirname, 'docs', 'learn.json'), learnItems)
 
 items.forEach(({frm, stateFrm}) => {
-    const dir = path.join(exampleDir, `${frm.name}-${stateFrm.name}`)
+    const dir = path.join(exampleDir, `${frm.name}-${formatName(stateFrm)}`)
     fs.mkdirSync(dir)
     fs.writeFileSync(path.join(dir, 'index.html'), genFrmIndex(frm))
 })

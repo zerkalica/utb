@@ -1,5 +1,5 @@
 // @flow
-import {mem} from 'lom_atom'
+import {detached, mem} from 'lom_atom'
 import {createReactWrapper, createCreateElement, Injector} from 'reactive-di'
 import {h, Component} from 'react-stubs'
 
@@ -29,7 +29,8 @@ function ErrorableView({
 const lomCreateElement = createCreateElement(
     createReactWrapper(
         Component,
-        ErrorableView
+        ErrorableView,
+        detached
     ),
     h
 )

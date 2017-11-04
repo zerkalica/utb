@@ -1,5 +1,5 @@
 // @flow
-import {mem} from 'lom_atom'
+import {mem, detached} from 'lom_atom'
 import {createReactWrapper, Injector} from 'reactive-di'
 import {Component} from 'react-stubs'
 
@@ -29,6 +29,7 @@ function ErrorableView({
 export default createReactWrapper(
     Component,
     ErrorableView,
+    detached,
     new Injector([
         [AbstractLocationStore, new BrowserLocationStore(location, history)]
     ])

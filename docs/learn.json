@@ -9,8 +9,12 @@
         "url": "examples/inferno-lom_atom"
       },
       {
-        "name": "mobx 3.3.1",
-        "url": "examples/inferno-mobx"
+        "name": "lom_atom 2.0.6 + reactive-di 5.0.2",
+        "url": "examples/inferno-lom_atom--reactive-di"
+      },
+      {
+        "name": "mobx 3.3.1 + mobx-react 4.3.4",
+        "url": "examples/inferno-mobx--mobx-react"
       },
       {
         "name": "mobx 3.3.1 + reactive-di 5.0.2",
@@ -19,10 +23,6 @@
       {
         "name": "raw",
         "url": "examples/inferno-raw"
-      },
-      {
-        "name": "reactive-di 5.0.2",
-        "url": "examples/inferno-reactive-di"
       }
     ]
   },
@@ -36,8 +36,12 @@
         "url": "examples/preact-lom_atom"
       },
       {
-        "name": "mobx 3.3.1",
-        "url": "examples/preact-mobx"
+        "name": "lom_atom 2.0.6 + reactive-di 5.0.2",
+        "url": "examples/preact-lom_atom--reactive-di"
+      },
+      {
+        "name": "mobx 3.3.1 + mobx-react 4.3.4",
+        "url": "examples/preact-mobx--mobx-react"
       },
       {
         "name": "mobx 3.3.1 + reactive-di 5.0.2",
@@ -46,10 +50,6 @@
       {
         "name": "raw",
         "url": "examples/preact-raw"
-      },
-      {
-        "name": "reactive-di 5.0.2",
-        "url": "examples/preact-reactive-di"
       }
     ]
   },
@@ -63,8 +63,12 @@
         "url": "examples/react-lom_atom"
       },
       {
-        "name": "mobx 3.3.1",
-        "url": "examples/react-mobx"
+        "name": "lom_atom 2.0.6 + reactive-di 5.0.2",
+        "url": "examples/react-lom_atom--reactive-di"
+      },
+      {
+        "name": "mobx 3.3.1 + mobx-react 4.3.4",
+        "url": "examples/react-mobx--mobx-react"
       },
       {
         "name": "mobx 3.3.1 + reactive-di 5.0.2",
@@ -73,10 +77,6 @@
       {
         "name": "raw",
         "url": "examples/react-raw"
-      },
-      {
-        "name": "reactive-di 5.0.2",
-        "url": "examples/react-reactive-di"
       }
     ]
   }

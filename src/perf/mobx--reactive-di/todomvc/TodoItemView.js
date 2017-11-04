@@ -4,8 +4,6 @@ import {observable} from 'mobx'
 import {props} from 'reactive-di'
 import type {ITodo} from './TodoService'
 
-import atomize from '../atomize'
-
 const ESCAPE_KEY = 27
 const ENTER_KEY = 13
 

@@ -1,5 +1,4 @@
 // @flow
-import atomize from '../atomize'
 import {action, mem} from 'lom_atom'
 import {props} from 'reactive-di'
 

@@ -1,7 +1,5 @@
 // @flow
 
-import atomize from '../atomize'
-
 import TodoService from './TodoService'
 import type {ITodo} from './TodoService'
 import TodoFilterService from './TodoFilterService'
@@ -10,7 +8,7 @@ import TodoHeaderView from './TodoHeaderView'
 import TodoFooterView from './TodoFooterView'
 import TodoItemView from './TodoItemView'
 
-function TodoPerfView(
+export default function TodoPerfView(
     _: {},
     {todoService, todoFilterService}: {
         todoService: TodoService;
@@ -55,4 +53,3 @@ TodoPerfView.deps = [{
     todoService: TodoService,
     todoFilterService: TodoFilterService
 }]
-export default (TodoPerfView)

@@ -78,14 +78,14 @@
     "inferno-component": "^3.10.1",
     "inferno-create-element": "^3.10.1",
     "inferno-mobx": "^3.10.1",
-    "lom_atom": "^2.0.7",
+    "lom_atom": "^2.0.8",
     "mobx": "^3.3.1",
     "mobx-preact": "^0.3.1",
     "mobx-react": "^4.3.4",
     "preact": "^8.2.6",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "reactive-di": "^5.0.3",
+    "reactive-di": "^5.0.4",
     "todomvc-common": "^1.0.4"
   }
 }

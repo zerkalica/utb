@@ -1,14 +1,25 @@
 {
-  "presets": [
-    "flow",
-    "react",
-    "stage-0",
-    ["es2015", {"loose": true}]
-  ],
   "plugins": [
-    "transform-decorators",
+    "@babel/proposal-decorators",
+    ["@babel/proposal-class-properties", {"loose": true}],
     "transform-metadata",
-    ["transform-class-properties", {"loose": true}],
-    ["transform-react-jsx", {"pragma": "lom_h"}]
+    ["@babel/transform-react-jsx", {"pragma": "lom_h"}],
+    ["@babel/transform-template-literals", {"loose": true}],
+    "@babel/transform-literals",
+    "@babel/transform-function-name",
+    ["@babel/transform-arrow-functions", {"loose": true}],
+    "@babel/transform-block-scoped-functions",
+    ["@babel/transform-classes", {"loose": true}],
+    "@babel/transform-object-super",
+    "@babel/transform-shorthand-properties",
+    "@babel/transform-duplicate-keys",
+    ["@babel/transform-computed-properties", {"loose": true}],
+    "@babel/check-constants",
+    ["@babel/transform-spread", {"loose": true}],
+    ["@babel/transform-parameters", {"loose": true}],
+    ["@babel/transform-destructuring", {"loose": true}],
+    "@babel/transform-block-scoping",
+    ["@babel/transform-modules-commonjs", {"loose": true}],
+    "@babel/transform-flow-strip-types"
   ]
 }

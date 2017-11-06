@@ -8,28 +8,20 @@ import replace from 'rollup-plugin-replace'
 import commonjs from 'rollup-plugin-commonjs'
 import sourcemaps from 'rollup-plugin-sourcemaps'
 import alias from 'rollup-plugin-alias'
-import babelrc from 'babelrc-rollup'
 
 import fs from 'fs'
 import path from 'path'
 import fr from 'find-root'
 import rimraf from 'rimraf'
 
-const pkg = JSON.parse(fs.readFileSync('./package.json'))
+const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json')))
+const babelrc = JSON.parse(fs.readFileSync(path.join(__dirname, '.babelrc')))
 
-function fixbabelrc(rc) {
-    return Object.assign({}, rc, {
-        presets: rc.presets.map((preset) => {
-            if (preset[0] === 'es2015') {
-               return preset
-            }
-            delete preset[1].modules
-            return Object.keys(preset[1]).length ? preset : preset[0]
-        })
-    })
-}
-
-const rc = fixbabelrc(babelrc())
+const magic = 'commonjs'
+babelrc.babelrc = false
+babelrc.plugins = babelrc.plugins.map(
+    plugin => (Array.isArray(plugin) ? (plugin[0] || ''): plugin).indexOf(magic) >= 0 ? null : plugin
+).filter(Boolean)
 
 const isUglify = process.env.UGIFY === 1 || process.env.NODE_ENV === 'production'
 
@@ -79,7 +71,7 @@ const baseConfig = {
         }),
 
         sourcemaps(),
-        babel(rc),
+        babel(babelrc),
         globals(),
     ].concat(isUglify ? [uglify({}, minify)] : [])
 }

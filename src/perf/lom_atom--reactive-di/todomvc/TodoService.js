@@ -1,6 +1,6 @@
 // @flow
 import {uuid} from './common-todomvc'
-import {mem, force, action} from 'lom_atom'
+import {mem, action} from 'lom_atom'
 
 interface ITodoBase {
     completed: boolean;

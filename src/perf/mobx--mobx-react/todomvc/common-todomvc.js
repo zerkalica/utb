@@ -18,7 +18,7 @@ export function pluralize(count: number, word: string): string {
 }
 
 export class AbstractLocationStore {
-    location(key: string, value?: string, force?: boolean): string {
+    location(key: string, value?: string): string {
         throw new Error('implement')
     }
 }
@@ -38,7 +38,7 @@ export class BrowserLocationStore extends AbstractLocationStore {
         return new URLSearchParams(this._location.search)
     }
 
-    location(key: string, value?: string, force?: boolean): string {
+    location(key: string, value?: string): string {
         const params = this._params()
         if (value === undefined) return params.get(key)
 

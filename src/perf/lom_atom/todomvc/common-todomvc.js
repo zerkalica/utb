@@ -1,5 +1,5 @@
 // @flow
-import {memkey} from 'lom_atom'
+import {mem} from 'lom_atom'
 
 export function uuid(): string {
     let uuid = ''
@@ -20,7 +20,7 @@ export function pluralize(count: number, word: string): string {
 }
 
 export class AbstractLocationStore {
-    location(key: string, value?: string, force?: boolean): string {
+    location(key: string, value?: string): string {
         throw new Error('implement')
     }
 }
@@ -40,8 +40,7 @@ export class BrowserLocationStore extends AbstractLocationStore {
         return new URLSearchParams(this._location.search)
     }
 
-    @memkey
-    location(key: string, value?: string, force?: boolean): string {
+    @mem.key location(key: string, value?: string): string {
         const params = this._params()
         if (value === undefined) return params.get(key)
 

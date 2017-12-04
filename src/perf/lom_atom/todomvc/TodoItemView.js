@@ -35,6 +35,7 @@ export class TodoItemService {
     }
 
     submit = () => {
+        if (!this.editingId) return
         this._todo.title = this.editText
         this.editText = ''
         this.editingId = null

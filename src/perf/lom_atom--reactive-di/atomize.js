@@ -1,5 +1,5 @@
 // @flow
-import {mem, detached} from 'lom_atom'
+import {mem, AtomWait, detached} from 'lom_atom'
 import {createReactWrapper, Injector} from 'reactive-di'
 import {Component} from 'react-stubs'
 
@@ -11,7 +11,7 @@ function ErrorableView({
     error: Error
 }) {
     return <div>
-        {error instanceof mem.Wait
+        {error instanceof AtomWait
             ? <div>
                 Loading...
             </div>

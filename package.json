@@ -85,7 +85,7 @@
     "preact": "^8.2.6",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "reactive-di": "^6.0.5",
+    "reactive-di": "^6.0.6",
     "todomvc-common": "^1.0.4"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "utb",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "description": "Unified todomvc benchmark",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

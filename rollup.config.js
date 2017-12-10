@@ -26,7 +26,7 @@ babelrc.plugins = babelrc.plugins.map(
 const isUglify = process.env.UGIFY === 1 || process.env.NODE_ENV === 'production'
 
 const baseConfig = {
-    sourcemap: isUglify,
+    sourcemap: true,
     plugins: [
         resolve({
             browser: true,

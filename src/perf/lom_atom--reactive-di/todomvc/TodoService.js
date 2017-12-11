@@ -40,11 +40,11 @@ class TodoModel implements ITodo {
         this._store.saveTodo(this.toJSON())
     }
 
-    destroy = () => {
+    @action destroy() {
         this._store.remove(this.id)
     }
 
-    toggle = () => {
+    @action toggle() {
         this.completed = !this.completed
         this._store.saveTodo(this.toJSON())
     }
@@ -76,15 +76,13 @@ export default class TodoService {
         return this.todos.length - this.activeTodoCount
     }
 
-    @action
-    addTodo(title: string) {
+    @action addTodo(title: string) {
         const todo = new TodoModel({title}, this)
         const newTodos = this.todos.slice(0)
         newTodos.push(todo)
         this.todos = newTodos
     }
 
-    @action
     saveTodo(todo: ITodoBase) {
         this.todos = this.todos.map(
             (t: ITodo) => t.id === todo.id
@@ -93,13 +91,11 @@ export default class TodoService {
         )
     }
 
-    @action
     remove(id: string) {
         this.todos = this.todos.filter((todo) => todo.id !== id)
     }
 
-    @action
-    toggleAll() {
+    @action toggleAll() {
         const completed = this.activeTodoCount > 0
 
         this.todos = this.todos.map(
@@ -111,8 +107,7 @@ export default class TodoService {
         )
     }
 
-    @action
-    clearCompleted() {
+    @action clearCompleted() {
         const newTodos: ITodo[] = []
         const delIds: string[] = []
         for (let i = 0; i < this.todos.length; i++) {

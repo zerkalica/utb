@@ -2,13 +2,6 @@
 
 import {action, mem} from 'lom_atom'
 import TodoService from './TodoService'
-interface ITodoHeaderProps {
-    addTodo(title: string): void;
-}
-
-class TodoHeaderProps implements ITodoHeaderProps {
-    addTodo: (title: string) => void;
-}
 
 const ENTER_KEY = 13
 
@@ -20,12 +13,11 @@ export class TodoHeaderService {
         this._todoService = todoService
     }
 
-    @action
-    onInput({target}: Event) {
+    @action onInput({target}: Event) {
         this.title = (target: any).value
     }
 
-    onKeyDown = (e: Event) => {
+    @action onKeyDown(e: Event) {
         if (e.keyCode === ENTER_KEY && this.title) {
             e.preventDefault()
             const text = this.title.trim()

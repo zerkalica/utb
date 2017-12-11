@@ -22,30 +22,27 @@ export class TodoItemService {
         this.editingId = this._props.todo.id
     }
 
-    setFocus = (el: any) => {
-        if (el) {
-            setTimeout(() => el.focus(), 0)
-        }
+    @action.defer setFocus(el: ?HTMLInputElement) {
+        if (el) el.focus()
     }
 
-    @action
-    setEditText(e: Event) {
+    @action setEditText(e: Event) {
         this.editText = (e.target: any).value
     }
 
-    cancel = () => {
-        // this.editText = ''
+    @action cancel() {
+        this.editText = ''
         this.editingId = null
     }
 
-    submit = () => {
+    @action submit() {
         if (!this.editingId) return
         this._props.todo.title = this.editText
         this.editText = ''
         this.editingId = null
     }
 
-    onKey = (e: Event) => {
+    @action onKey(e: Event) {
         if (e.which === ESCAPE_KEY) {
             this.cancel()
         } else if (e.which === ENTER_KEY) {

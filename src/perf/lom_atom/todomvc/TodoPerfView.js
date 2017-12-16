@@ -1,51 +1,35 @@
 // @flow
 
 import TodoService from './TodoService'
-import type {ITodo} from './TodoService'
-import TodoFilterService from './TodoFilterService'
-
 import TodoHeaderView, {TodoHeaderService} from './TodoHeaderView'
-import TodoFooterView from './TodoFooterView'
+
+import TodoFooterView from '../../../common/TodoFooterView'
 import TodoItemView from './TodoItemView'
+import TodoMainView from '../../../common/TodoMainView'
 
 export default function TodoPerfView(
-    {todoService, todoFilterService, todoHeaderService}: {
+    {todoService, todoHeaderService}: {
         todoService: TodoService;
         todoHeaderService: TodoHeaderService;
-        todoFilterService: TodoFilterService;
     }
 ) {
     const todos = todoService.todos
     return <div>
-        <TodoHeaderView todoHeaderService={todoHeaderService}/>
-        {todos.length
-            ? <section id="main">
-                <input
-                    id="toggle-all"
-                    type="checkbox"
-                    onChange={todoService.toggleAll}
-                    checked={todoService.activeTodoCount === 0}
-                />
-                <ul id="todo-list">
-                    {todoFilterService.filteredTodos.map((todo: ITodo) =>
-                        <TodoItemView
-                            key={todo.id}
-                            todo={todo}
-                        />
-                    )}
-                </ul>
-            </section>
-            : null
-        }
-
-        {todoService.activeTodoCount || todoService.completedCount
-            ? <TodoFooterView
-                count={todoService.activeTodoCount}
-                completedCount={todoService.completedCount}
-                nowShowing={todoFilterService.filter}
-                onClearCompleted={todoService.clearCompleted}
+        <TodoHeaderView todoHeaderService={todoHeaderService} />
+        {todoService.todos.length
+            ? <TodoMainView
+                toggleAll={todoService.toggleAll}
+                activeTodoCount={todoService.activeTodoCount}
+                filteredTodos={todoService.filteredTodos}
+                TodoItemView={TodoItemView}
             />
             : null
         }
+        <TodoFooterView
+            activeTodoCount={todoService.activeTodoCount}
+            completedCount={todoService.completedCount}
+            filter={todoService.filter}
+            clearCompleted={todoService.clearCompleted}
+        />
     </div>
 }

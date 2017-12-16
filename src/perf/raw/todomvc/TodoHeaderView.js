@@ -1,11 +1,11 @@
 // @flow
-import {Component} from 'react-stubs'
-import TodoService from './TodoService'
-
-const ENTER_KEY = 13
+import {Component} from 'stubs/react'
+import {ENTER_KEY} from '../../../common/interfaces'
+import type {ITodo} from '../../../common/interfaces'
+import TodoHeaderViewOrig from '../../../common/TodoHeaderView'
 
 interface ITodoHeaderProps {
-    todoService: TodoService;
+    addTodo: (title: string) => void;
 }
 
 export default class TodoHeaderView extends Component<ITodoHeaderProps, {title: string}> {
@@ -21,23 +21,17 @@ export default class TodoHeaderView extends Component<ITodoHeaderProps, {title: 
             e.preventDefault()
             const text = title.trim()
             if (text) {
-                this.props.todoService.addTodo(text)
+                this.props.addTodo(text)
                 this.setState({title: ''})
             }
         }
     }
 
     render() {
-        return <header id="header">
-            <h1>todos</h1>
-            <input
-                id="new-todo"
-                placeholder="What needs to be done?"
-                onInput={this.onInput}
-                value={this.state.title}
-                onKeyDown={this.onKeyDown}
-                autoFocus={true}
-            />
-        </header>
+        return TodoHeaderViewOrig({
+            onInput: this.onInput,
+            title: this.state.title,
+            onKeyDown: this.onKeyDown
+        })
     }
 }

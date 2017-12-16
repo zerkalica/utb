@@ -1,9 +1,10 @@
 // @flow
 
 import {action, mem} from 'lom_atom'
-import TodoService from './TodoService'
+import {ENTER_KEY} from '../../../common/interfaces'
 
-const ENTER_KEY = 13
+import TodoService from './TodoService'
+import TodoHeaderViewOrig from '../../../common/TodoHeaderView'
 
 export class TodoHeaderService {
     @mem title: string = ''
@@ -34,15 +35,5 @@ export default function TodoHeaderView(
         todoHeaderService: TodoHeaderService;
     }
 ) {
-    return <header id="header">
-        <h1>todos</h1>
-        <input
-            id="new-todo"
-            placeholder="What needs to be done?"
-            onInput={todoHeaderService.onInput}
-            value={todoHeaderService.title}
-            onKeyDown={todoHeaderService.onKeyDown}
-            autoFocus={true}
-        />
-    </header>
+    return TodoHeaderViewOrig(todoHeaderService)
 }

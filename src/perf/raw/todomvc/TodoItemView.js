@@ -1,12 +1,11 @@
 // @flow
 
-import {Component} from 'react-stubs'
-import type {ITodo} from './TodoService'
+import {Component} from 'stubs/react'
+import {ESCAPE_KEY, ENTER_KEY} from '../../../common/interfaces'
+import TodoItemViewOrig from '../../../common/TodoItemView'
+import {Todo} from './TodoService'
 
-const ESCAPE_KEY = 27
-const ENTER_KEY = 13
-
-export default class TodoItemView extends Component<{todo: ITodo}, {editingId: ?string, editText: string}> {
+export default class TodoItemView extends Component<{todo: Todo}, {editingId: ?string, editText: string}> {
     state = {
         editingId: null,
         editText: ''
@@ -60,32 +59,20 @@ export default class TodoItemView extends Component<{todo: ITodo}, {editingId: ?
     }
 
     render() {
-        const todo = this.props.todo
-        const editing = this.state.editingId === todo.id
-        return <li
-            className={`${todo.completed ? 'completed ' : ' '}${editing ? 'editing' : ''}`}
-        >
-            <div className="view">
-                <input
-                    className="toggle"
-                    type="checkbox"
-                    checked={todo.completed || 0}
-                    onClick={todo.toggle}
-                />
-                <label onDblClick={this.beginEdit}>{todo.title}</label>
-                <button className="destroy" onClick={todo.destroy} />
-            </div>
-            {editing
-                ? <input
-                    ref={this.setFocus}
-                    className="edit"
-                    value={(this.state.editingId && this.state.editText) || todo.title}
-                    onBlur={this.submit}
-                    onInput={this.setEditText}
-                    onKeyDown={this.onKey}
-                />
-                : null
-            }
-        </li>
+        const {todo} = this.props
+        const state = this.state
+
+        return TodoItemViewOrig({
+            editingId: state.editingId,
+            beginEdit: this.beginEdit,
+            editText: state.editText,
+            submit: this.submit,
+            setEditText: this.setEditText,
+            setFocus: this.setFocus,
+            onKey: this.onKey,
+            todo: todo,
+            destroy: todo.destroy,
+            toggle: todo.toggle
+        })
     }
 }

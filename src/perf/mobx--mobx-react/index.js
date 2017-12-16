@@ -1,24 +1,25 @@
 // @flow
 
-import {h, render} from 'react-stubs'
+import {h, render} from 'stubs/react'
+import {Provider} from 'stubs/mobx'
 
-import {TodoPerfView} from './todomvc'
-
-import {BrowserLocationStore} from './todomvc/common-todomvc'
+import {getRoot} from '../../common/utils'
 
 import TodoService from './todomvc/TodoService'
-import TodoFilterService from './todomvc/TodoFilterService'
 import {TodoHeaderService} from './todomvc/TodoHeaderView'
+import TodoPerfView from './todomvc/TodoPerfView'
 
 const todoService = new TodoService()
-const browserLocationStore = new BrowserLocationStore(location, history)
-const todoFilterService = new TodoFilterService(todoService, browserLocationStore)
 const todoHeaderService = new TodoHeaderService(todoService)
 
 global['lom_h'] = h
 
-render(<TodoPerfView
-    todoHeaderService={todoHeaderService}
-    todoService={todoService}
-    todoFilterService={todoFilterService}
-/>, document.getElementById('todoapp'))
+render(
+    <Provider
+        todoHeaderService={todoHeaderService}
+        todoService={todoService}
+    >
+        <TodoPerfView/>
+    </Provider>,
+    getRoot()
+)

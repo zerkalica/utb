@@ -1,50 +1,43 @@
 // @flow
-import atomize from '../atomize'
 import {action, observable} from 'mobx'
-import {props} from 'reactive-di'
+import {ENTER_KEY} from '../../../common/interfaces'
+import TodoService from './TodoService'
+import TodoHeaderViewOrig from '../../../common/TodoHeaderView'
 
-interface ITodoHeaderProps {
-    addTodo(title: string): void;
-}
-
-const ENTER_KEY = 13
-
-class TodoToAdd {
+export class TodoHeaderService {
     @observable title: string = ''
-    @props _props: ITodoHeaderProps
+    _todoService: TodoService
 
-    onInput = ({target}: Event) => {
-        this.title = (target: any).value
+    static deps = [TodoService]
+
+    constructor(todoService: TodoService) {
+        this._todoService = todoService
     }
 
-    onKeyDown = (e: Event) => {
+    onInput = action(({target}: Event) => {
+        this.title = (target: any).value
+    })
+
+    onKeyDown = action((e: Event) => {
         if (e.keyCode === ENTER_KEY && this.title) {
             e.preventDefault()
             const text = this.title.trim()
             if (text) {
-                this._props.addTodo(text)
+                this._todoService.addTodo(text)
                 this.title = ''
             }
         }
-    }
+    })
 }
 
 export default function TodoHeaderView(
-    _: ITodoHeaderProps,
-    {todoToAdd}: {
-        todoToAdd: TodoToAdd;
+    _: {},
+    {todoHeaderService}: {
+        todoHeaderService: TodoHeaderService;
     }
 ) {
-    return <header id="header">
-        <h1>todos</h1>
-        <input
-            id="new-todo"
-            placeholder="What needs to be done?"
-            onInput={todoToAdd.onInput}
-            value={todoToAdd.title}
-            onKeyDown={todoToAdd.onKeyDown}
-            autoFocus={true}
-        />
-    </header>
+    return TodoHeaderViewOrig(todoHeaderService)
 }
-TodoHeaderView.deps = [{todoToAdd: TodoToAdd}]
+TodoHeaderView.deps = [{
+    todoHeaderService: TodoHeaderService
+}]

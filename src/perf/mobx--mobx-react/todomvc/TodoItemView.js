@@ -1,11 +1,12 @@
 // @flow
 
 import {action, observable} from 'mobx'
-import {observer} from 'mobx-stubs'
-import type {ITodo} from './TodoService'
+import {observer} from 'stubs/mobx'
 
-const ESCAPE_KEY = 27
-const ENTER_KEY = 13
+import {ESCAPE_KEY, ENTER_KEY} from '../../../common/interfaces'
+import type {ITodo} from '../../../common/interfaces'
+import TodoItemViewOrig from '../../../common/TodoItemView'
+import {Todo} from './TodoService'
 
 export class TodoItemService {
     @observable editingId: ?string = null
@@ -13,26 +14,26 @@ export class TodoItemService {
 
     _todo: ITodo
 
-    beginEdit = (todo: ITodo) => {
+    @action beginEditTodo(todo: ITodo) {
         this._todo = todo
         this.editText = todo.title
         this.editingId = todo.id
     }
 
-    setFocus = (el: any) => {
+    setFocus = action((el: any) => {
         if (el) {
             setTimeout(() => el.focus(), 0)
         }
-    }
+    })
 
     setEditText = action((e: Event) => {
         this.editText = (e.target: any).value
     })
 
-    cancel = action(() => {
+    @action cancel() {
         this.editText = ''
         this.editingId = null
-    })
+    }
 
     submit = action(() => {
         if (!this.editingId) return
@@ -51,38 +52,21 @@ export class TodoItemService {
 }
 
 const todoItemService = new TodoItemService()
-
+const editCache = Symbol('editCache')
 function TodoItemView(
-    {todo}: {
-        todo: ITodo;
-    }
+    {todo}: {todo: Todo}
 ) {
-    const editing = todoItemService.editingId === todo.id
-    return <li
-        className={`${todo.completed ? 'completed ' : ' '}${editing ? 'editing' : ''}`}
-    >
-        <div className="view">
-            <input
-                className="toggle"
-                type="checkbox"
-                checked={todo.completed || 0}
-                onClick={todo.toggle}
-            />
-            <label onDblClick={() => todoItemService.beginEdit(todo)}>{todo.title}</label>
-            <button className="destroy" onClick={todo.destroy} />
-        </div>
-        {editing
-            ? <input
-                ref={todoItemService.setFocus}
-                className="edit"
-                value={todoItemService.editingId && todoItemService.editText || todo.title}
-                onBlur={todoItemService.submit}
-                onInput={todoItemService.setEditText}
-                onKeyDown={todoItemService.onKey}
-            />
-            : null
-        }
-    </li>
+    let beginEdit: ?() => void = (todo: Object)[editCache]
+    if (!beginEdit) {
+        ;(todo: Object)[editCache] = beginEdit = () => todoItemService.beginEditTodo(todo)
+    }
+    return TodoItemViewOrig({
+        ...todoItemService,
+        beginEdit,
+        todo,
+        destroy: todo.destroy,
+        toggle: todo.toggle
+    })
 }
 
 export default observer(TodoItemView)

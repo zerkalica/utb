@@ -23,23 +23,32 @@ babelrc.plugins = babelrc.plugins.map(
     plugin => (Array.isArray(plugin) ? (plugin[0] || ''): plugin).indexOf(magic) >= 0 ? null : plugin
 ).filter(Boolean)
 
+
+if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production'
+
 const isUglify = process.env.UGIFY === 1 || process.env.NODE_ENV === 'production'
+
 
 const baseConfig = {
     sourcemap: true,
     plugins: [
+
         resolve({
             browser: true,
             module: true
         }),
+
         replace({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }),
         commonjs({
             namedExports: {
                 'mobx': ['observable'],
-                'mobx-react': ['observer'],
-                'inferno-mobx': ['observer'],
+                'mobx-react': ['observer', 'Provider', 'inject'],
+                'inferno-mobx': ['observer', 'Provider', 'inject'],
+                'redux': ['createStore', 'combineReducers', 'bindActionCreators'],
+                'react-redux': ['Provider', 'connect'],
+                'inferno-redux': ['Provider', 'connect'],
                 'inferno-compat': ['render', 'createElement', 'Component'],
                 'react-dom': ['render', 'findDOMNode', 'unstable_batchedUpdates'],
                 'react': ['createElement', 'Component', 'Children']
@@ -47,20 +56,25 @@ const baseConfig = {
             include: [
                 'node_modules/create-react-class/**',
                 'node_modules/hoist-non-react-statics/**',
+                'node_modules/invariant/**',
                 'node_modules/preact-classless-component/**',
                 'node_modules/fbjs/**',
                 'node_modules/object-assign/**',
                 'node_modules/react/**',
                 'node_modules/react-dom/**',
+                'node_modules/symbol-observable/**',
                 'node_modules/prop-types/**',
                 'node_modules/inferno*/**',
                 'node_modules/hoist-non-inferno-statics/**',
                 'node_modules/preact/**',
+                'node_modules/redux/**',
                 'node_modules/mobx/**',
                 'node_modules/inferno-mobx/**',
                 'node_modules/mobx-react/**',
-                'node_modules/mobx-preact/**'
-
+                'node_modules/mobx-preact/**',
+                'node_modules/react-redux/**',
+                'node_modules/preact-redux/**',
+                'node_modules/inferno-redux/**'
             ],
             exclude: [
                  'node_modules/process-es6/**',
@@ -76,9 +90,12 @@ const baseConfig = {
     ].concat(isUglify ? [uglify({}, minify)] : [])
 }
 
+
 function toConfig({frm, stateFrm}) {
     const stName = formatName(stateFrm)
     const name = `${frm.name}-${stName}`
+
+    const stateLibName = Array.isArray(stateFrm) ? stateFrm[0].name : stateFrm.name
 
     return Object.assign({}, baseConfig, {
         input: `src/perf/${stName}/index.js`,
@@ -87,8 +104,8 @@ function toConfig({frm, stateFrm}) {
         ],
         plugins: baseConfig.plugins.concat([
             alias({
-                'react-stubs': `src/stubs/${frm.name}.js`,
-                'mobx-stubs': `src/stubs-mobx/${frm.name}.js`
+                ['stubs/react']: `src/stubs/react/${frm.name}.js`,
+                [`stubs/${stateLibName}`]: `src/stubs/${stateLibName}/${frm.name}.js`
             })
         ])
     })
@@ -196,14 +213,17 @@ function genFrmIndex(frm) {
 
 // main
 const stubsDir = path.join(__dirname, 'src', 'stubs')
+
+
+const reactStubsDir = path.join(stubsDir, 'react')
 const perfDir = path.join(__dirname, 'src', 'perf')
 
 const defaultComponentLib = process.env.COMPONENT_LIB
 const defaultStateLib = process.env.STATE_LIB
 
 const componentDirs = defaultComponentLib
-    ? [path.join(stubsDir, defaultComponentLib)]
-    : fs.readdirSync(stubsDir)
+    ? [path.join(reactStubsDir, defaultComponentLib)]
+    : fs.readdirSync(reactStubsDir)
 
 const stateLibDirs = defaultStateLib
     ? [path.join(perfDir, defaultStateLib)]
@@ -226,5 +246,7 @@ items.forEach(({frm, stateFrm}) => {
     fs.mkdirSync(dir)
     fs.writeFileSync(path.join(dir, 'index.html'), genFrmIndex(frm))
 })
+
+console.log(process.env.NODE_ENV)
 
 export default items.map(toConfig)

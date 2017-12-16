@@ -1,18 +1,18 @@
 // @flow
 
 import {action, mem} from 'lom_atom'
-import type {ITodo} from './TodoService'
+import {ESCAPE_KEY, ENTER_KEY} from '../../../common/interfaces'
+import type {ITodo} from '../../../common/interfaces'
+import TodoItemViewOrig from '../../../common/TodoItemView'
+import {Todo} from './TodoService'
 
-const ESCAPE_KEY = 27
-const ENTER_KEY = 13
-
-export class TodoItemService {
+class TodoItemService {
     @mem editingId: ?string = null
     @mem editText: string = ''
 
     _todo: ITodo
 
-    beginEdit = (todo: ITodo) => {
+    @action beginEditTodo(todo: ITodo) {
         this._todo = todo
         this.editText = todo.title
         this.editingId = todo.id
@@ -47,37 +47,19 @@ export class TodoItemService {
     }
 }
 
-const todoItemService = new TodoItemService()
-
-export default function TodoItemView(
-    {todo}: {
-        todo: ITodo;
+const srv = new TodoItemService()
+const editCache = Symbol('editCache')
+export default function TodoItemView({todo}: {+todo: Todo}) {
+    let beginEdit: ?() => void = (todo: Object)[editCache]
+    if (!beginEdit) {
+        ;(todo: Object)[editCache] = beginEdit = () => srv.beginEditTodo(todo)
     }
-) {
-    const editing = todoItemService.editingId === todo.id
-    return <li
-        className={`${todo.completed ? 'completed ' : ' '}${editing ? 'editing' : ''}`}
-    >
-        <div className="view">
-            <input
-                className="toggle"
-                type="checkbox"
-                checked={todo.completed || 0}
-                onClick={todo.toggle}
-            />
-            <label onDblClick={() => todoItemService.beginEdit(todo)}>{todo.title}</label>
-            <button className="destroy" onClick={todo.destroy} />
-        </div>
-        {editing
-            ? <input
-                ref={todoItemService.setFocus}
-                className="edit"
-                value={todoItemService.editingId && todoItemService.editText || todo.title}
-                onBlur={todoItemService.submit}
-                onInput={todoItemService.setEditText}
-                onKeyDown={todoItemService.onKey}
-            />
-            : null
-        }
-    </li>
+
+    return TodoItemViewOrig({
+        ...srv,
+        beginEdit,
+        todo,
+        destroy: todo.destroy,
+        toggle: todo.toggle
+    })
 }

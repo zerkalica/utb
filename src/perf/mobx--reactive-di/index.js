@@ -2,9 +2,8 @@
 
 import './setup'
 
-import {render} from 'react-stubs'
+import {render} from 'stubs/react'
+import {getRoot} from '../../common/utils'
+import TodoPerfView from './todomvc/TodoPerfView'
 
-import {TodoPerfView} from './todomvc'
-
-
-render(<TodoPerfView/>, document.getElementById('todoapp'))
+render(<TodoPerfView/>, getRoot())

@@ -1,9 +1,7 @@
 // @flow
-import {AtomWait, detached, mem} from 'lom_atom'
+import {AtomWait, detached} from 'lom_atom'
 import {createReactWrapper, createCreateElement, Injector} from 'reactive-di'
-import {h, Component} from 'react-stubs'
-
-import {BrowserLocationStore, AbstractLocationStore} from './todomvc/common-todomvc'
+import {h, Component} from 'stubs/react'
 
 function ErrorableView({
     error

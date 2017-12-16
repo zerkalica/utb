@@ -5,12 +5,12 @@
 [libs]
 node_modules/jss/flow-typed
 node_modules/reactive-di/flow-typed
+./flow-typed
 
 [options]
 munge_underscores=true
 esproposal.decorators=ignore
 esproposal.class_static_fields=enable
 esproposal.class_instance_fields=enable
-module.name_mapper='^react-stubs' -> '<PROJECT_ROOT>/src/stubs/preact.js'
-module.name_mapper='^mobx-stubs' -> '<PROJECT_ROOT>/src/stubs-mobx/preact.js'
+module.name_mapper='^stubs/\(.*\)' -> '<PROJECT_ROOT>/src/stubs/\1/react.js'
 unsafe.enable_getters_and_setters=true

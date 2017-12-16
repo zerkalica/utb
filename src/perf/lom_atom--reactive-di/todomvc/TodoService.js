@@ -1,30 +1,22 @@
 // @flow
-import {uuid} from './common-todomvc'
 import {mem, action} from 'lom_atom'
+import type {ITodo, IFilter} from '../../../common/interfaces'
+import TodoFilter from '../../../common/TodoFilter'
 
-interface ITodoBase {
-    completed: boolean;
-    title: string;
-    id: string;
-}
-
-export interface ITodo extends ITodoBase {
-    destroy(): void;
-    toggle(): void;
-}
+import {uuid} from '../../../common/utils'
 
 function toJson<V>(r: Response): Promise<V> {
     return r.json()
 }
 
-class TodoModel implements ITodo {
+export class Todo implements ITodo {
     completed: boolean
     _title: string
     id: string
 
     _store: TodoService
 
-    constructor(todo?: $Shape<ITodoBase> = {}, store: TodoService) {
+    constructor(todo?: $Shape<ITodo> = {}, store: TodoService) {
         this._title = todo.title || ''
         this.id = todo.id || uuid()
         this.completed = todo.completed || false
@@ -49,7 +41,7 @@ class TodoModel implements ITodo {
         this._store.saveTodo(this.toJSON())
     }
 
-    toJSON(): ITodoBase {
+    toJSON(): ITodo {
         return ({
             completed: this.completed,
             title: this._title,
@@ -59,15 +51,17 @@ class TodoModel implements ITodo {
 }
 
 export default class TodoService {
-    @mem get todos(): ITodo[] {
+    _todoFilter: TodoFilter<Todo> = new TodoFilter()
+
+    @mem get todos(): Todo[] {
         return []
     }
 
-    @mem set todos(todos: ITodo[] | Error) {}
+    @mem set todos(todos: Todo[]) {}
 
     @mem get activeTodoCount(): number {
         return this.todos.reduce(
-            (sum: number, todo: ITodo) => sum + (todo.completed ? 0 : 1),
+            (sum: number, todo: Todo) => sum + (todo.completed ? 0 : 1),
             0
         )
     }
@@ -77,29 +71,29 @@ export default class TodoService {
     }
 
     @action addTodo(title: string) {
-        const todo = new TodoModel({title}, this)
+        const todo = new Todo({title}, this)
         const newTodos = this.todos.slice(0)
         newTodos.push(todo)
         this.todos = newTodos
     }
 
-    saveTodo(todo: ITodoBase) {
+    saveTodo(todo: ITodo) {
         this.todos = this.todos.map(
-            (t: ITodo) => t.id === todo.id
-                ? new TodoModel(todo, this)
+            (t, i) => t.id === todo.id
+                ? new Todo(todo, this)
                 : t
         )
     }
 
     remove(id: string) {
-        this.todos = this.todos.filter((todo) => todo.id !== id)
+        this.todos = this.todos.filter(todo => todo.id !== id)
     }
 
     @action toggleAll() {
         const completed = this.activeTodoCount > 0
 
         this.todos = this.todos.map(
-            (todo: ITodo) => new TodoModel({
+            (todo, i) => new Todo({
                 title: todo.title,
                 id: todo.id,
                 completed
@@ -108,7 +102,7 @@ export default class TodoService {
     }
 
     @action clearCompleted() {
-        const newTodos: ITodo[] = []
+        const newTodos: Todo[] = []
         const delIds: string[] = []
         for (let i = 0; i < this.todos.length; i++) {
             const todo = this.todos[i]
@@ -119,5 +113,13 @@ export default class TodoService {
             }
         }
         this.todos = newTodos
+    }
+
+    get filter(): IFilter {
+        return this._todoFilter.filter
+    }
+
+    @mem get filteredTodos(): Todo[] {
+        return this._todoFilter.filtered(this.todos)
     }
 }

@@ -24,9 +24,9 @@ babelrc.plugins = babelrc.plugins.map(
 ).filter(Boolean)
 
 
-if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production'
+//if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production'
 
-const isUglify = process.env.UGIFY === 1 || process.env.NODE_ENV === 'production'
+const isUglify = process.env.UGLIFY === 1 || process.env.NODE_ENV === 'production'
 
 
 const baseConfig = {

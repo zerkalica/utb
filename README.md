@@ -1,6 +1,6 @@
 # Unified todomvc benchmark
 
-Todomvcs generated for react, preact, inferno without and with [mobx](https://mobx.js.org) and [reactive-di](https://github.com/zerkalica/reactive-di) state managent libraries from one source.
+Todomvcs generated for react, preact, inferno without and with redux, [mobx](https://mobx.js.org) and [reactive-di](https://github.com/zerkalica/reactive-di) state managent libraries from one source.
 
 Open [all todomvc](https://zerkalica.github.com/utb)
 

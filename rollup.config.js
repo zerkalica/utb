@@ -25,8 +25,20 @@ babelrc.plugins = babelrc.plugins.map(
 
 
 //if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production'
+// ['createNode']
+const isUglify = process.env.UGLIFY === undefined ? process.env.NODE_ENV === 'production' : process.env.UGLIFY === '1'
 
-const isUglify = process.env.UGLIFY === 1 || process.env.NODE_ENV === 'production'
+const uglifyOpts = {
+    warnings: true,
+    compress: {
+        reduce_vars: false,
+        dead_code: true,
+        unused: true
+    },
+    mangle: {
+        toplevel: true
+    }
+}
 
 
 const baseConfig = {
@@ -87,7 +99,7 @@ const baseConfig = {
         sourcemaps(),
         babel(babelrc),
         globals(),
-    ].concat(isUglify ? [uglify({}, minify)] : [])
+    ].concat(isUglify ? [uglify(uglifyOpts, minify)] : [])
 }
 
 

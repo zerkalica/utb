@@ -79,7 +79,7 @@
     "inferno-create-element": "^3.10.1",
     "inferno-mobx": "^3.10.1",
     "inferno-redux": "^3.10.1",
-    "lom_atom": "^3.0.17",
+    "lom_atom": "^3.0.20",
     "mobx": "^3.4.1",
     "mobx-preact": "^1.1.0",
     "mobx-react": "^4.3.5",
@@ -88,7 +88,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
-    "reactive-di": "^6.0.6",
+    "reactive-di": "^6.0.8",
     "redux": "^3.7.2",
     "todomvc-common": "^1.0.4"
   }

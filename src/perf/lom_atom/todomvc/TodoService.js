@@ -4,10 +4,6 @@ import type {ITodo, IFilter} from '../../../common/interfaces'
 import TodoFilter from '../../../common/TodoFilter'
 import {uuid} from '../../../common/utils'
 
-function toJson<V>(r: Response): Promise<V> {
-    return r.json()
-}
-
 export class Todo implements ITodo {
     completed: boolean
     _title: string
@@ -22,22 +18,26 @@ export class Todo implements ITodo {
         this._store = store
     }
 
+    copy(todo: $Shape<ITodo>): Todo {
+        return new Todo(todo, this._store)
+    }
+
     get title(): string {
         return this._title
     }
 
     set title(t: string) {
         this._title = t
-        this._store.saveTodo(this.toJSON())
+        this._store.saveTodo(this, this.copy())
     }
 
     @action destroy() {
-        this._store.remove(this.id)
+        this._store.remove(this)
     }
 
     @action toggle() {
         this.completed = !this.completed
-        this._store.saveTodo(this.toJSON())
+        this._store.saveTodo(this, this.copy())
     }
 
     toJSON(): ITodo {
@@ -70,29 +70,27 @@ export default class TodoService {
     }
 
     @action addTodo(title: string) {
-        const todo = new Todo({title}, this)
-        const newTodos = this.todos.slice(0)
-        newTodos.push(todo)
-        this.todos = newTodos
+        mem.getColl(this.todos).add(new Todo({title}, this))
     }
 
-    saveTodo(todo: ITodo) {
-        this.todos = this.todos.map(
-            (t, i) => t.id === todo.id
-                ? new Todo(todo, this)
-                : t
-        )
+    saveTodo(old: Todo, todo: Todo) {
+        mem.getColl(this.todos).replace(old, todo)
+        // this.todos = this.todos.map(
+        //     (t, i) => t.id === todo.id
+        //         ? new Todo(todo, this)
+        //         : t
+        // )
     }
 
-    remove(id: string) {
-        this.todos = this.todos.filter(todo => todo.id !== id)
+    remove(todo: Todo) {
+        mem.getColl(this.todos).delete(todo)
+        // this.todos = this.todos.filter(todo => todo.id !== id)
     }
 
     @action toggleAll() {
         const completed = this.activeTodoCount > 0
 
-        this.todos = this.todos.map(
-            (todo, i) => new Todo({
+        mem.getColl(this.todos).update(todo => new Todo({
                 title: todo.title,
                 id: todo.id,
                 completed

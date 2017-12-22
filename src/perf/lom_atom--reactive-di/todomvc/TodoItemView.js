@@ -54,15 +54,15 @@ class TodoItemService {
 
 export default function TodoItemView(
     {todo}: ITodoItemProps,
-    {todoItemService}: {todoItemService: TodoItemService}
+    {srv: {beginEdit, onKey, submit, setEditText, setFocus, editingId, editText}}: {srv: TodoItemService}
 ) {
     return TodoItemViewOrig({
-        ...todoItemService,
+        beginEdit, onKey, submit, setEditText, setFocus, beginEdit, editingId, editText,
         todo,
         destroy: todo.destroy,
         toggle: todo.toggle
     })
 }
 TodoItemView.deps = [{
-    todoItemService: TodoItemService
+    srv: TodoItemService
 }]

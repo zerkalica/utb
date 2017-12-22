@@ -54,9 +54,10 @@ export default function TodoItemView({todo}: {+todo: Todo}) {
     if (!beginEdit) {
         ;(todo: Object)[editCache] = beginEdit = () => srv.beginEditTodo(todo)
     }
+    const {onKey, submit, setEditText, setFocus, editingId, editText} = srv
 
     return TodoItemViewOrig({
-        ...srv,
+        onKey, submit, setEditText, setFocus, editingId, editText,
         beginEdit,
         todo,
         destroy: todo.destroy,

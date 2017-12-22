@@ -5,11 +5,11 @@
     "homepage": "https://github.com/infernojs/inferno#readme",
     "examples": [
       {
-        "name": "lom_atom 3.0.20",
+        "name": "lom_atom 3.1.0",
         "url": "examples/inferno-lom_atom"
       },
       {
-        "name": "lom_atom 3.0.20 + reactive-di 6.0.8",
+        "name": "lom_atom 3.1.0 + reactive-di 6.0.8",
         "url": "examples/inferno-lom_atom--reactive-di"
       },
       {
@@ -36,11 +36,11 @@
     "homepage": "https://github.com/developit/preact",
     "examples": [
       {
-        "name": "lom_atom 3.0.20",
+        "name": "lom_atom 3.1.0",
         "url": "examples/preact-lom_atom"
       },
       {
-        "name": "lom_atom 3.0.20 + reactive-di 6.0.8",
+        "name": "lom_atom 3.1.0 + reactive-di 6.0.8",
         "url": "examples/preact-lom_atom--reactive-di"
       },
       {
@@ -67,11 +67,11 @@
     "homepage": "https://reactjs.org/",
     "examples": [
       {
-        "name": "lom_atom 3.0.20",
+        "name": "lom_atom 3.1.0",
         "url": "examples/react-lom_atom"
       },
       {
-        "name": "lom_atom 3.0.20 + reactive-di 6.0.8",
+        "name": "lom_atom 3.1.0 + reactive-di 6.0.8",
         "url": "examples/react-lom_atom--reactive-di"
       },
       {

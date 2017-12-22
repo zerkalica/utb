@@ -60,8 +60,9 @@ function TodoItemView(
     if (!beginEdit) {
         ;(todo: Object)[editCache] = beginEdit = () => todoItemService.beginEditTodo(todo)
     }
+    const {onKey, submit, setEditText, setFocus, editingId, editText} = todoItemService
     return TodoItemViewOrig({
-        ...todoItemService,
+        onKey, submit, setEditText, setFocus, editingId, editText,
         beginEdit,
         todo,
         destroy: todo.destroy,

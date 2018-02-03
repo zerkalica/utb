@@ -1,15 +1,15 @@
 // @flow
 
 import TodoFooterViewOrig from '../../../common/TodoFooterView'
-import TodoService from './TodoService'
+import TodoRepository from './TodoRepository'
 
 export default function TodoFooterView(
     _: {},
-    {todoService}: {todoService: TodoService}
+    {todoRepository}: {todoRepository: TodoRepository}
 ) {
-    return TodoFooterViewOrig(todoService)
+    return TodoFooterViewOrig(todoRepository)
 }
 
 TodoFooterView.deps = [{
-    todoService: TodoService
+    todoRepository: TodoRepository
 }]

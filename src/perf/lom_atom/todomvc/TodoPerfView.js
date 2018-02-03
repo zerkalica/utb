@@ -1,6 +1,6 @@
 // @flow
 
-import TodoService from './TodoService'
+import TodoRepository from './TodoRepository'
 import TodoHeaderView, {TodoHeaderService} from './TodoHeaderView'
 
 import TodoFooterView from '../../../common/TodoFooterView'
@@ -8,28 +8,27 @@ import TodoItemView from './TodoItemView'
 import TodoMainView from '../../../common/TodoMainView'
 
 export default function TodoPerfView(
-    {todoService, todoHeaderService}: {
-        todoService: TodoService;
+    {todoRepository, todoHeaderService}: {
+        todoRepository: TodoRepository;
         todoHeaderService: TodoHeaderService;
     }
 ) {
-    const todos = todoService.todos
     return <div>
         <TodoHeaderView todoHeaderService={todoHeaderService} />
-        {todoService.todos.length
+        {todoRepository.todos.length > 0
             ? <TodoMainView
-                toggleAll={todoService.toggleAll}
-                activeTodoCount={todoService.activeTodoCount}
-                filteredTodos={todoService.filteredTodos}
+                toggleAll={todoRepository.toggleAll}
+                activeTodoCount={todoRepository.activeTodoCount}
+                filteredTodos={todoRepository.filteredTodos}
                 TodoItemView={TodoItemView}
             />
             : null
         }
         <TodoFooterView
-            activeTodoCount={todoService.activeTodoCount}
-            completedCount={todoService.completedCount}
-            filter={todoService.filter}
-            clearCompleted={todoService.clearCompleted}
+            activeTodoCount={todoRepository.activeTodoCount}
+            completedCount={todoRepository.completedCount}
+            filter={todoRepository.filter}
+            clearCompleted={todoRepository.clearCompleted}
         />
     </div>
 }

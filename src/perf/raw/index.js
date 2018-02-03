@@ -4,12 +4,12 @@ import {h, render} from 'stubs/react'
 import {getRoot} from '../../common/utils'
 
 import TodoPerfView from './todomvc/TodoPerfView'
-import TodoService from './todomvc/TodoService'
+import TodoRepository from './todomvc/TodoRepository'
 
-const todoService = new TodoService()
+const todoRepository = new TodoRepository()
 
 global['lom_h'] = h
 
 render(<TodoPerfView
-    todoService={todoService}
+    todoRepository={todoRepository}
 />, getRoot())

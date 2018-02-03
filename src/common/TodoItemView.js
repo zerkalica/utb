@@ -27,7 +27,7 @@ export default function TodoItemView(
                 checked={todo.completed || 0}
                 onClick={toggle}
             />
-            <label onDblClick={beginEdit}>{todo.title}</label>
+            <label onDoubleClick={beginEdit} onDblClick={beginEdit}>{todo.title}</label>
             <button className="destroy" onClick={destroy} />
         </div>
         {editing

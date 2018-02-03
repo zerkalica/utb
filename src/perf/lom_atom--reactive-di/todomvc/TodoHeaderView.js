@@ -1,17 +1,17 @@
 // @flow
 import {action, mem} from 'lom_atom'
 import {ENTER_KEY} from '../../../common/interfaces'
-import TodoService from './TodoService'
+import TodoRepository from './TodoRepository'
 import TodoHeaderViewOrig from '../../../common/TodoHeaderView'
 
 export class TodoHeaderService {
     @mem title: string = ''
-    _todoService: TodoService
+    _todoRepository: TodoRepository
 
-    static deps = [TodoService]
+    static deps = [TodoRepository]
 
-    constructor(todoService: TodoService) {
-        this._todoService = todoService
+    constructor(todoRepository: TodoRepository) {
+        this._todoRepository = todoRepository
     }
 
     @action onInput({target}: Event) {
@@ -23,7 +23,7 @@ export class TodoHeaderService {
             e.preventDefault()
             const text = this.title.trim()
             if (text) {
-                this._todoService.addTodo(text)
+                this._todoRepository.addTodo(text)
                 this.title = ''
             }
         }

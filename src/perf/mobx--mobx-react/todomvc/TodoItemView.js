@@ -6,7 +6,7 @@ import {observer} from 'stubs/mobx'
 import {ESCAPE_KEY, ENTER_KEY} from '../../../common/interfaces'
 import type {ITodo} from '../../../common/interfaces'
 import TodoItemViewOrig from '../../../common/TodoItemView'
-import {Todo} from './TodoService'
+import {Todo} from './TodoRepository'
 
 export class TodoItemService {
     @observable editingId: ?string = null

@@ -3,16 +3,16 @@
 import {inject, observer} from 'stubs/mobx'
 
 import TodoMainViewOrig from '../../../common/TodoMainView'
-import TodoService from './TodoService'
+import TodoRepository from './TodoRepository'
 import TodoItemView from './TodoItemView'
 
 function TodoMainView(
-    {todoService}: {todoService: TodoService}
+    {todoRepository}: {todoRepository: TodoRepository}
 ) {
     return TodoMainViewOrig({
-        toggleAll: todoService.toggleAll,
-        activeTodoCount: todoService.activeTodoCount,
-        filteredTodos: todoService.filteredTodos,
+        toggleAll: todoRepository.toggleAll,
+        activeTodoCount: todoRepository.activeTodoCount,
+        filteredTodos: todoRepository.filteredTodos,
         TodoItemView: TodoItemView
     })
 }

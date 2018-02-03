@@ -22,11 +22,11 @@ export default class TodoFilter<Todo: ITodo> {
     filtered(todos: Todo[]): Todo[] {
         switch (this.filter) {
             case TODO_FILTER.ALL:
-                return todos // .filter((todo: ITodo) => !todo.deleted)
+                return todos
             case TODO_FILTER.COMPLETE:
-                return todos.filter((todo) => !!todo.completed)
+                return todos.filter(todo => !!todo.completed)
             case TODO_FILTER.ACTIVE:
-                return todos.filter((todo) => !todo.completed)
+                return todos.filter(todo => !todo.completed)
             default:
                 throw new Error(`Unknown filter value: ${String(this.filter)}`)
         }

@@ -2,18 +2,17 @@
 
 import {action, mem} from 'lom_atom'
 import {ESCAPE_KEY, ENTER_KEY} from '../../../common/interfaces'
-import type {ITodo} from '../../../common/interfaces'
 import TodoItemViewOrig from '../../../common/TodoItemView'
-import {Todo} from './TodoService'
+import {Todo} from './TodoRepository'
 
-class TodoItemService {
+export class TodoItemService {
     @mem editingId: ?string = null
     @mem editText: string = ''
 
-    _todo: ITodo
+    _todo: Todo
 
-    @action beginEditTodo(todo: ITodo) {
-        this._todo = todo
+    @action beginEdit() {
+        const todo = this._todo
         this.editText = todo.title
         this.editingId = todo.id
     }
@@ -33,9 +32,13 @@ class TodoItemService {
 
     @action submit() {
         if (!this.editingId) return
-        this._todo.title = this.editText
+        this._todo.update({title: this.editText})
         this.editText = ''
         this.editingId = null
+    }
+
+    @action toggle() {
+        this._todo.update({completed: !this._todo.completed})
     }
 
     @action onKey(e: KeyboardEvent) {
@@ -47,20 +50,22 @@ class TodoItemService {
     }
 }
 
-const srv = new TodoItemService()
 const editCache = Symbol('editCache')
 export default function TodoItemView({todo}: {+todo: Todo}) {
-    let beginEdit: ?() => void = (todo: Object)[editCache]
-    if (!beginEdit) {
-        ;(todo: Object)[editCache] = beginEdit = () => srv.beginEditTodo(todo)
+    let srv: TodoItemService = (todo: Object)[editCache]
+    if (!srv) {
+        srv = new TodoItemService()
+        srv._todo = todo
+        ;(todo: Object)[editCache] = srv
     }
-    const {onKey, submit, setEditText, setFocus, editingId, editText} = srv
+
+    const {beginEdit, onKey, submit, setEditText, setFocus, editingId, editText, toggle} = srv
 
     return TodoItemViewOrig({
         onKey, submit, setEditText, setFocus, editingId, editText,
         beginEdit,
         todo,
-        destroy: todo.destroy,
-        toggle: todo.toggle
+        destroy: todo.delete,
+        toggle
     })
 }

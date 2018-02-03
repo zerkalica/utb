@@ -4,7 +4,7 @@ import {props} from 'reactive-di'
 import {action, mem} from 'lom_atom'
 import {ESCAPE_KEY, ENTER_KEY} from '../../../common/interfaces'
 import TodoItemViewOrig from '../../../common/TodoItemView'
-import {Todo} from './TodoService'
+import {Todo} from './TodoRepository'
 
 interface ITodoItemProps {
     +todo: Todo;
@@ -35,6 +35,11 @@ class TodoItemService {
         this.editingId = null
     }
 
+    @action toggle() {
+        const {todo} = this.props
+        todo.update({completed: !todo.completed})
+    }
+
     @action submit() {
         if (!this.editingId) return
         const {todo} = this.props
@@ -54,13 +59,13 @@ class TodoItemService {
 
 export default function TodoItemView(
     {todo}: ITodoItemProps,
-    {srv: {beginEdit, onKey, submit, setEditText, setFocus, editingId, editText}}: {srv: TodoItemService}
+    {srv: {toggle, beginEdit, onKey, submit, setEditText, setFocus, editingId, editText}}: {srv: TodoItemService}
 ) {
     return TodoItemViewOrig({
         beginEdit, onKey, submit, setEditText, setFocus, beginEdit, editingId, editText,
         todo,
-        destroy: todo.destroy,
-        toggle: todo.toggle
+        destroy: todo.delete,
+        toggle
     })
 }
 TodoItemView.deps = [{

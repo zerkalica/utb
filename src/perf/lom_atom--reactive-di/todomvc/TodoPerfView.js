@@ -1,22 +1,22 @@
 // @flow
 
-import TodoService from './TodoService'
+import TodoRepository from './TodoRepository'
 import TodoHeaderView from './TodoHeaderView'
 import TodoFooterView from './TodoFooterView'
 import TodoMainView from './TodoMainView'
 
 export default function TodoPerfView(
     _: {},
-    {todoService}: {
-        todoService: TodoService;
+    {todoRepository}: {
+        todoRepository: TodoRepository;
     }
 ) {
     return <div>
         <TodoHeaderView />
-        {todoService.todos.length ? <TodoMainView /> : null}
+        {todoRepository.todos.length ? <TodoMainView /> : null}
         <TodoFooterView />
     </div>
 }
 TodoPerfView.deps = [{
-    todoService: TodoService
+    todoRepository: TodoRepository
 }]

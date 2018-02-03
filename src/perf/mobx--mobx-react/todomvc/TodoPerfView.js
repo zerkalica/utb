@@ -2,19 +2,19 @@
 
 import {observer, inject} from 'stubs/mobx'
 
-import TodoService from './TodoService'
+import TodoRepository from './TodoRepository'
 import TodoHeaderView from './TodoHeaderView'
 import TodoFooterView from './TodoFooterView'
 import TodoMainView from './TodoMainView'
 
 function TodoPerfView(
-    {todoService}: {
-        todoService: TodoService;
+    {todoRepository}: {
+        todoRepository: TodoRepository;
     }
 ) {
     return <div>
         <TodoHeaderView />
-        {todoService.todos.length ? <TodoMainView /> : null}
+        {todoRepository.todos.length ? <TodoMainView /> : null}
         <TodoFooterView />
     </div>
 }

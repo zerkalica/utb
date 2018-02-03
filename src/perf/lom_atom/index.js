@@ -6,14 +6,14 @@ import {render} from 'stubs/react'
 
 import {getRoot} from '../../common/utils'
 
-import TodoService from './todomvc/TodoService'
+import TodoRepository from './todomvc/TodoRepository'
 import {TodoHeaderService} from './todomvc/TodoHeaderView'
 import TodoPerfView from './todomvc/TodoPerfView'
 
-const todoService = new TodoService()
-const todoHeaderService = new TodoHeaderService(todoService)
+const todoRepository = new TodoRepository()
+const todoHeaderService = new TodoHeaderService(todoRepository)
 
 render(<TodoPerfView
     todoHeaderService={todoHeaderService}
-    todoService={todoService}
+    todoRepository={todoRepository}
 />, getRoot())

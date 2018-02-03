@@ -1,25 +1,26 @@
 // @flow
-import {mem, action} from 'lom_atom'
+import {action, observable, computed} from 'mobx'
+
 import type {ITodo, IFilter} from '../../../common/interfaces'
 import TodoFilter from '../../../common/TodoFilter'
 import {uuid} from '../../../common/utils'
+
+function toJson<V>(r: Response): Promise<V> {
+    return r.json()
+}
 
 export class Todo implements ITodo {
     completed: boolean
     _title: string
     id: string
 
-    _store: TodoService
+    _store: TodoRepository
 
-    constructor(todo?: $Shape<ITodo> = {}, store: TodoService) {
+    constructor(todo?: $Shape<ITodo> = {}, store: TodoRepository) {
         this._title = todo.title || ''
         this.id = todo.id || uuid()
         this.completed = todo.completed || false
         this._store = store
-    }
-
-    copy(todo: $Shape<ITodo>): Todo {
-        return new Todo(todo, this._store)
     }
 
     get title(): string {
@@ -28,16 +29,16 @@ export class Todo implements ITodo {
 
     set title(t: string) {
         this._title = t
-        this._store.saveTodo(this, this.copy())
+        this._store.saveTodo(this.toJSON())
     }
 
-    @action destroy() {
-        this._store.remove(this)
+    destroy = () => {
+        this._store.remove(this.id)
     }
 
-    @action toggle() {
+    toggle = () => {
         this.completed = !this.completed
-        this._store.saveTodo(this, this.copy())
+        this._store.saveTodo(this.toJSON())
     }
 
     toJSON(): ITodo {
@@ -49,18 +50,13 @@ export class Todo implements ITodo {
     }
 }
 
-export default class TodoService {
+export default class TodoRepository {
     _todoFilter: TodoFilter<Todo> = new TodoFilter()
 
-    @mem get todos(): Todo[] {
-        return []
-    }
-
-    @mem set todos(todos: Todo[]) {}
-
-    @mem get activeTodoCount(): number {
+    @observable todos: Todo[] = []
+    @computed get activeTodoCount(): number {
         return this.todos.reduce(
-            (sum: number, todo: Todo) => sum + (todo.completed ? 0 : 1),
+            (sum: number, todo: ITodo) => sum + (todo.completed ? 0 : 1),
             0
         )
     }
@@ -69,36 +65,38 @@ export default class TodoService {
         return this.todos.length - this.activeTodoCount
     }
 
-    @action addTodo(title: string) {
-        mem.getColl(this.todos).add(new Todo({title}, this))
-    }
+    addTodo = action((title: string) => {
+        const todo = new Todo({title}, this)
+        const newTodos = this.todos.slice(0)
+        newTodos.push(todo)
+        this.todos = newTodos
+    })
 
-    saveTodo(old: Todo, todo: Todo) {
-        mem.getColl(this.todos).replace(old, todo)
-        // this.todos = this.todos.map(
-        //     (t, i) => t.id === todo.id
-        //         ? new Todo(todo, this)
-        //         : t
-        // )
-    }
+    saveTodo = action((todo: ITodo) => {
+        this.todos = this.todos.map(
+            (t, i) => t.id === todo.id
+                ? new Todo(todo, this)
+                : t
+        )
+    })
 
-    remove(todo: Todo) {
-        mem.getColl(this.todos).delete(todo)
-        // this.todos = this.todos.filter(todo => todo.id !== id)
-    }
+    remove = action((id: string) => {
+        this.todos = this.todos.filter((todo) => todo.id !== id)
+    })
 
-    @action toggleAll() {
+    toggleAll = action(() => {
         const completed = this.activeTodoCount > 0
 
-        mem.getColl(this.todos).update(todo => new Todo({
+        this.todos = this.todos.map(
+            (todo, i) => new Todo({
                 title: todo.title,
                 id: todo.id,
                 completed
             }, this)
         )
-    }
+    })
 
-    @action clearCompleted() {
+    clearCompleted = action(() => {
         const newTodos: Todo[] = []
         const delIds: string[] = []
         for (let i = 0; i < this.todos.length; i++) {
@@ -110,13 +108,13 @@ export default class TodoService {
             }
         }
         this.todos = newTodos
-    }
+    })
 
     get filter(): IFilter {
         return this._todoFilter.filter
     }
 
-    @mem get filteredTodos(): Todo[] {
+    @computed get filteredTodos(): Todo[] {
         return this._todoFilter.filtered(this.todos)
     }
 }

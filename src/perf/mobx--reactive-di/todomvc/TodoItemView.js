@@ -3,7 +3,7 @@ import {props} from 'reactive-di'
 import {observable, action} from 'mobx'
 import {ESCAPE_KEY, ENTER_KEY} from '../../../common/interfaces'
 import TodoItemViewOrig from '../../../common/TodoItemView'
-import {Todo} from './TodoService'
+import {Todo} from './TodoRepository'
 
 interface ITodoItemProps {
     +todo: Todo;

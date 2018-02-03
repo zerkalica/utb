@@ -5,19 +5,19 @@ import {Provider} from 'stubs/mobx'
 
 import {getRoot} from '../../common/utils'
 
-import TodoService from './todomvc/TodoService'
+import TodoRepository from './todomvc/TodoRepository'
 import {TodoHeaderService} from './todomvc/TodoHeaderView'
 import TodoPerfView from './todomvc/TodoPerfView'
 
-const todoService = new TodoService()
-const todoHeaderService = new TodoHeaderService(todoService)
+const todoRepository = new TodoRepository()
+const todoHeaderService = new TodoHeaderService(todoRepository)
 
 global['lom_h'] = h
 
 render(
     <Provider
         todoHeaderService={todoHeaderService}
-        todoService={todoService}
+        TodoRepository={todoRepository}
     >
         <TodoPerfView/>
     </Provider>,

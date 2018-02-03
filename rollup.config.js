@@ -42,7 +42,9 @@ const uglifyOpts = {
 
 
 const baseConfig = {
-    sourcemap: true,
+    output: {
+        sourcemap: true,
+    },
     plugins: [
 
         resolve({
@@ -112,7 +114,11 @@ function toConfig({frm, stateFrm}) {
     return Object.assign({}, baseConfig, {
         input: `src/perf/${stName}/index.js`,
         output: [
-            {file: `docs/examples/${name}/bundle.js`, format: 'iife', name: name.replace(/\-/g, '_')}
+            Object.assign({}, baseConfig.output, {
+                file: `docs/examples/${name}/bundle.js`,
+                format: 'iife',
+                name: name.replace(/\-/g, '_')
+            })
         ],
         plugins: baseConfig.plugins.concat([
             alias({

@@ -1,6 +1,6 @@
 // @flow
 import {Component} from 'stubs/react'
-import TodoService from './TodoService'
+import TodoRepository from './TodoRepository'
 
 import TodoHeaderView from './TodoHeaderView'
 import TodoItemView from './TodoItemView'
@@ -9,33 +9,33 @@ import TodoFooterView from '../../../common/TodoFooterView'
 import TodoMainView from '../../../common/TodoMainView'
 
 interface ITodoPerfProps {
-    todoService: TodoService;
+    todoRepository: TodoRepository;
 }
 
 export default class TodoPerfView extends Component<ITodoPerfProps> {
     constructor(props: ITodoPerfProps, context: any) {
         super(props, context)
-        props.todoService.notify = () => this.forceUpdate()
+        props.todoRepository.notify = () => this.forceUpdate()
     }
 
     render() {
-        const {todoService} = this.props
+        const {todoRepository} = this.props
         return <div>
-            <TodoHeaderView addTodo={todoService.addTodo}/>
-            {todoService.todos.length
+            <TodoHeaderView addTodo={todoRepository.addTodo}/>
+            {todoRepository.todos.length
                 ? <TodoMainView
-                    toggleAll={todoService.toggleAll}
-                    activeTodoCount={todoService.activeTodoCount}
-                    filteredTodos={todoService.filteredTodos}
+                    toggleAll={todoRepository.toggleAll}
+                    activeTodoCount={todoRepository.activeTodoCount}
+                    filteredTodos={todoRepository.filteredTodos}
                     TodoItemView={TodoItemView}
                 />
                 : null
             }
             <TodoFooterView
-                activeTodoCount={todoService.activeTodoCount}
-                completedCount={todoService.completedCount}
-                filter={todoService.filter}
-                clearCompleted={todoService.clearCompleted}
+                activeTodoCount={todoRepository.activeTodoCount}
+                completedCount={todoRepository.completedCount}
+                filter={todoRepository.filter}
+                clearCompleted={todoRepository.clearCompleted}
             />
         </div>
     }

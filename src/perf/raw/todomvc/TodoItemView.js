@@ -3,7 +3,7 @@
 import {Component} from 'stubs/react'
 import {ESCAPE_KEY, ENTER_KEY} from '../../../common/interfaces'
 import TodoItemViewOrig from '../../../common/TodoItemView'
-import {Todo} from './TodoService'
+import {Todo} from './TodoRepository'
 
 export default class TodoItemView extends Component<{todo: Todo}, {editingId: ?string, editText: string}> {
     state = {

@@ -64,6 +64,7 @@ const baseConfig = {
                 'react-redux': ['Provider', 'connect'],
                 'inferno-redux': ['Provider', 'connect'],
                 'inferno-compat': ['render', 'createElement', 'Component'],
+                'inferno-clone-vnode': ['infernoCloneVnode'],
                 'react-dom': ['render', 'findDOMNode', 'unstable_batchedUpdates'],
                 'react': ['createElement', 'Component', 'Children']
             },

@@ -1,5 +1,5 @@
 // @flow
-import {AtomWait, detached} from 'lom_atom'
+import {AtomWait, ReactAtom} from 'lom_atom'
 import {createReactWrapper, createCreateElement, Injector} from 'reactive-di'
 import {h, Component} from 'stubs/react'
 import {AbstractLocationStore, BrowserLocationStore} from '../../common/utils'
@@ -29,7 +29,7 @@ const lomCreateElement = createCreateElement(
     createReactWrapper(
         Component,
         ErrorableView,
-        detached,
+        ReactAtom,
         new Injector([
             [AbstractLocationStore, new BrowserLocationStore(location, history)]
         ])

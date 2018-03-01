@@ -9,3 +9,9 @@ or run locally:
 1. npm install
 2. npm run build && npm start
 3. open http://localhost:8080
+
+Build single library target:
+
+```
+COMPONENT_LIB=preact STATE_LIB=lom_atom--reactive-di npm run build
+```

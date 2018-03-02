@@ -249,9 +249,9 @@
 
 			var dropper = droppers[ index++ % droppers.length ]
 
-			dropper.dispatchEvent( new Event( 'mousedown' , { bubbles : true } ) )
-			dropper.dispatchEvent( new Event( 'mouseup' , { bubbles : true } ) )
-			dropper.dispatchEvent( new Event( 'click' , { bubbles : true } ) )
+			dropper.dispatchEvent( new MouseEvent( 'mousedown' , { bubbles : true } ) )
+			dropper.dispatchEvent( new MouseEvent( 'mouseup' , { bubbles : true } ) )
+			dropper.dispatchEvent( new MouseEvent( 'click' , { bubbles : true } ) )
 
 			setImmediate( step )
 		}

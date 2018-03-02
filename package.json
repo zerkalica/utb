@@ -77,7 +77,6 @@
     "inferno": "^4.0.6",
     "inferno-clone-vnode": "^4.0.6",
     "inferno-compat": "^4.0.6",
-    "inferno-component": "^4.0.6",
     "inferno-create-element": "^4.0.6",
     "inferno-mobx": "^4.0.6",
     "inferno-redux": "^4.0.6",

@@ -17,7 +17,7 @@ global['lom_h'] = h
 render(
     <Provider
         todoHeaderService={todoHeaderService}
-        TodoRepository={todoRepository}
+        todoRepository={todoRepository}
     >
         <TodoPerfView/>
     </Provider>,

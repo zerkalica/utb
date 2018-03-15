@@ -53,6 +53,9 @@ const baseConfig = {
         }),
 
         replace({
+            exclude: [
+                'node_modules/mobx/**'
+            ],
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }),
         commonjs({
@@ -111,6 +114,15 @@ function toConfig({frm, stateFrm}) {
     const name = `${frm.name}-${stName}`
 
     const stateLibName = Array.isArray(stateFrm) ? stateFrm[0].name : stateFrm.name
+    const aliasOpts = {
+        ['stubs/react']: `src/stubs/react/${frm.name}.js`,
+        [`stubs/${stateLibName}`]: `src/stubs/${stateLibName}/${frm.name}.js`
+    }
+
+    if (frm.name === 'inferno') {
+        aliasOpts['react-dom'] = 'inferno-compat'
+        aliasOpts['react'] = 'inferno-compat'
+    }
 
     return Object.assign({}, baseConfig, {
         input: `src/perf/${stName}/index.js`,
@@ -122,10 +134,7 @@ function toConfig({frm, stateFrm}) {
             })
         ],
         plugins: baseConfig.plugins.concat([
-            alias({
-                ['stubs/react']: `src/stubs/react/${frm.name}.js`,
-                [`stubs/${stateLibName}`]: `src/stubs/${stateLibName}/${frm.name}.js`
-            })
+            alias(aliasOpts)
         ])
     })
 }

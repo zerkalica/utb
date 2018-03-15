@@ -1,6 +1,7 @@
 // @flow
 import {Reaction} from 'mobx'
-import {createReactWrapper, createMobxReaction, createCreateElement, Injector} from 'reactive-di'
+import createMobxAtom from 'urc/dist/createMobxAtom.es'
+import {createReactWrapper, createCreateElement, Injector} from 'reactive-di'
 import {h, Component} from 'stubs/react'
 import {AbstractLocationStore, BrowserLocationStore} from '../../common/utils'
 
@@ -29,7 +30,7 @@ const lomCreateElement = createCreateElement(
     createReactWrapper(
         Component,
         ErrorableView,
-        createMobxReaction(Reaction),
+        createMobxAtom(Reaction),
         new Injector([
             [AbstractLocationStore, new BrowserLocationStore(location, history)]
         ])

@@ -1,23 +1,23 @@
 {
   "inferno_utb": {
-    "name": "inferno 4.0.7",
+    "name": "inferno 4.0.8",
     "description": "An extremely fast, React-like JavaScript library for building modern user interfaces",
     "homepage": "https://github.com/infernojs/inferno#readme",
     "examples": [
       {
-        "name": "lom_atom 4.0.0",
+        "name": "lom_atom 4.0.1",
         "url": "examples/inferno-lom_atom"
       },
       {
-        "name": "lom_atom 4.0.0 + reactive-di 7.0.0",
+        "name": "lom_atom 4.0.1 + reactive-di 7.0.1",
         "url": "examples/inferno-lom_atom--reactive-di"
       },
       {
-        "name": "mobx 3.6.1 + mobx-react 4.4.2",
+        "name": "mobx 4.0.2 + mobx-react 5.0.0",
         "url": "examples/inferno-mobx--mobx-react"
       },
       {
-        "name": "mobx 3.6.1 + reactive-di 7.0.0",
+        "name": "mobx 4.0.2 + reactive-di 7.0.1",
         "url": "examples/inferno-mobx--reactive-di"
       },
       {
@@ -36,19 +36,19 @@
     "homepage": "https://github.com/developit/preact",
     "examples": [
       {
-        "name": "lom_atom 4.0.0",
+        "name": "lom_atom 4.0.1",
         "url": "examples/preact-lom_atom"
       },
       {
-        "name": "lom_atom 4.0.0 + reactive-di 7.0.0",
+        "name": "lom_atom 4.0.1 + reactive-di 7.0.1",
         "url": "examples/preact-lom_atom--reactive-di"
       },
       {
-        "name": "mobx 3.6.1 + mobx-react 4.4.2",
+        "name": "mobx 4.0.2 + mobx-react 5.0.0",
         "url": "examples/preact-mobx--mobx-react"
       },
       {
-        "name": "mobx 3.6.1 + reactive-di 7.0.0",
+        "name": "mobx 4.0.2 + reactive-di 7.0.1",
         "url": "examples/preact-mobx--reactive-di"
       },
       {
@@ -67,19 +67,19 @@
     "homepage": "https://reactjs.org/",
     "examples": [
       {
-        "name": "lom_atom 4.0.0",
+        "name": "lom_atom 4.0.1",
         "url": "examples/react-lom_atom"
       },
       {
-        "name": "lom_atom 4.0.0 + reactive-di 7.0.0",
+        "name": "lom_atom 4.0.1 + reactive-di 7.0.1",
         "url": "examples/react-lom_atom--reactive-di"
       },
       {
-        "name": "mobx 3.6.1 + mobx-react 4.4.2",
+        "name": "mobx 4.0.2 + mobx-react 5.0.0",
         "url": "examples/react-mobx--mobx-react"
       },
       {
-        "name": "mobx 3.6.1 + reactive-di 7.0.0",
+        "name": "mobx 4.0.2 + reactive-di 7.0.1",
         "url": "examples/react-mobx--reactive-di"
       },
       {
